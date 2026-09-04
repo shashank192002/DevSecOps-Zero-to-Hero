@@ -13,6 +13,14 @@ jobs:
         working-directory: ./terraform
 
     steps:
+      -  name: Debug OIDC token
+         run: |
+          curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://github.com/shashank192002" \
+            | jq -r '.value' | cut -d. -f2 | base64 -d 2>/dev/null | jq .
+         env:
+           ACTIONS_ID_TOKEN_REQUEST_TOKEN: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN }}
+           ACTIONS_ID_TOKEN_REQUEST_URL: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL }}
       - uses: actions/checkout@v4
 
       - name: Fetch Keys from Vault
