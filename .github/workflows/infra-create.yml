@@ -20,7 +20,7 @@ jobs:
         with:
           url: http://3.235.23.223:8200
           role: gh-actions-role
-          jwtAudience: "https://github.com/shashank192002"
+          jwtGithubAudience: "https://github.com/shashank192002"
           method: jwt
           secrets: |
             aws/creds/terraform-role access_key | AWS_ACCESS_KEY_ID ;
